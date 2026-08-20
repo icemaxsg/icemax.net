@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "en-SG" }}">
+{{ partial "head.html" . }}
+<body>
+  {{/* The environment sits behind the whole document on every page. Each page
+       enters the same landscape at its own point on the camera track, so the
+       site reads as one continuous space rather than a repeated backdrop. */}}
+  {{ partial "stage.html" . }}
+  {{ partial "nav.html" . }}
+
+  <main id="main" class="ix-shell">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+  {{ partial "scripts.html" . }}
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* ============================================================
+   iceMax — layout: shell, grid, section rhythm, hairlines
+   ============================================================ */
+.ix-shell { position: relative; z-index: 1; }
+
+.ix-wrap {
+  width: 100%;
+  max-width: var(--ix-max);
+  margin-inline: auto;
+  padding-inline: var(--ix-gutter);
+}
+.ix-wrap--flush { max-width: none; }
+
+.ix-section { position: relative; padding-block: var(--ix-section); }
+.ix-section--tight { padding-block: clamp(4rem, 8vh, 7rem); }
+.ix-section--flush-top { padding-top: 0; }
+
+/* 12-column editorial grid */
+.ix-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+.ix-c-1  { grid-column: span 1; }  .ix-c-2  { grid-column: span 2; }
+.ix-c-3  { grid-column: span 3; }  .ix-c-4  { grid-column: span 4; }
+.ix-c-5  { grid-column: span 5; }  .ix-c-6  { grid-column: span 6; }
+.ix-c-7  { grid-column: span 7; }  .ix-c-8  { grid-column: span 8; }
+.ix-c-9  { grid-column: span 9; }  .ix-c-10 { grid-column: span 10; }
+.ix-c-12 { grid-column: 1 / -1; }
+.ix-start-2 { grid-column-start: 2; } .ix-start-3 { grid-column-start: 3; }
+.ix-start-6 { grid-column-start: 6; } .ix-start-7 { grid-column-start: 7; }
+
+@media (max-width: 1024px) {
+  .ix-c-4, .ix-c-5, .ix-c-6 { grid-column: span 6; }
+  .ix-c-3 { grid-column: span 6; }
+  .ix-c-7, .ix-c-8, .ix-c-9, .ix-c-10 { grid-column: 1 / -1; }
+  .ix-start-2, .ix-start-3, .ix-start-6, .ix-start-7 { grid-column-start: auto; }
+}
+@media (max-width: 680px) {
+  .ix-grid > * { grid-column: 1 / -1 !important; }
+}
+
+/* section header: mono index + rule + title, the recurring editorial device */
+.ix-sec-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+.ix-sec-meta {
+  display: flex; align-items: center; gap: 1.1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--ix-line);
+}
+.ix-sec-meta::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--ix-line-2), transparent);
+}
+
+/* hairline rules — structural, never decorative */
+.ix-rule { height: 1px; background: var(--ix-line); border: 0; }
+.ix-rule--ice { background: linear-gradient(90deg, var(--ix-ice), transparent 62%); opacity: .5; }
+
+/* a vertical measuring line, like a section datum */
+.ix-datum { position: relative; padding-left: clamp(1.2rem, 3vw, 2.6rem); }
+.ix-datum::before {
+  content: ''; position: absolute; left: 0; top: .25em; bottom: .25em;
+  width: 1px; background: linear-gradient(180deg, var(--ix-ice), transparent);
+  opacity: .55;
+}

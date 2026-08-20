@@ -1,0 +1,75 @@
+{{ define "main" }}
+  {{ partial "page-hero.html" . }}
+
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      <div class="ix-grid">
+        <div class="ix-c-4">
+          {{ with .Params.aside_label }}
+          <div class="ix-sec-meta ix-page-aside"><span class="ix-index">{{ $.Params.aside_index | default "01" }}</span><span class="ix-label">{{ . }}</span></div>
+          {{ end }}
+        </div>
+        <div class="ix-c-8 ix-reveal ix-prose">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{ with .Params.figure }}
+    {{ if eq . "section" }}
+    <section class="ix-section ix-section--flush-top">
+      <div class="ix-wrap">{{ partial "mountain-section.html" $ }}</div>
+    </section>
+    {{ end }}
+  {{ end }}
+
+  {{ with .Params.principles }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "02" "label" $.Params.principles_label | default "Operating Principles") }}
+      <div class="ix-principles">
+        {{- range $i, $p := . }}
+        <article class="ix-principle">
+          <div class="ix-principle-head"><span class="ix-principle-n">{{ printf "%02d" (add $i 1) }}</span></div>
+          <div>
+            <h2 class="ix-h2" style="margin-bottom:1.2rem">{{ $p.title | safeHTML }}</h2>
+            <p class="ix-body">{{ $p.description }}</p>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.roles }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "02" "label" "Who We Look For") }}
+      <div class="ix-roles">
+        {{- range $i, $r := . }}
+        <article class="ix-role ix-reveal">
+          <span class="ix-index">{{ printf "%02d" (add $i 1) }}</span>
+          <div>
+            <h2 class="ix-h3" style="margin-bottom:.7rem">{{ $r.title }}</h2>
+            <p class="ix-body">{{ $r.description }}</p>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.contact_block }}{{ partial "contact-block.html" . }}{{ end }}
+
+  {{ with .Params.cta }}
+  {{ partial "cta.html" (dict
+    "label" (.label | default "Next")
+    "title" .title
+    "primary" (dict "text" .primary.text "url" (.primary.url | relURL))
+    "secondary" (cond (isset . "secondary") (dict "text" .secondary.text "url" (.secondary.url | relURL)) nil)
+  ) }}
+  {{ end }}
+{{ end }}

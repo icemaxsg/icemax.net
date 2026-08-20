@@ -1,0 +1,143 @@
+/* ============================================================
+   iceMax — editorial components
+   Numbered rows, strata, steps. Deliberately not cards.
+   ============================================================ */
+
+/* ---------- peak motif: the divider ---------- */
+.ix-peak-rule { width: 100%; line-height: 0; opacity: .55; }
+.ix-peak-rule svg { width: 100%; height: 26px; display: block; }
+.ix-peak-rule path {
+  fill: none; stroke: var(--ix-line-2); stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ix-story > .ix-peak-rule { margin-bottom: clamp(3rem, 7vh, 5.5rem); }
+.ix-footer > .ix-peak-rule { margin-bottom: clamp(2.5rem, 5vh, 4rem); opacity: .4; }
+
+/* ---------- home story ---------- */
+.ix-sec-title { max-width: 20ch; }
+.ix-story-body { align-items: start; row-gap: clamp(2.5rem, 5vw, 3.5rem); }
+.ix-story-figure { align-self: center; }
+
+.ix-pillar-stack { display: grid; border-top: 1px solid var(--ix-line); }
+.ix-pillar-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1rem, 2.4vw, 1.8rem);
+  padding: clamp(1.3rem, 2.4vw, 1.8rem) clamp(0rem, 1vw, .9rem);
+  border-bottom: 1px solid var(--ix-line);
+  background: rgba(4, 7, 12, 0.42);
+  transition: background var(--ix-dur) var(--ix-ease);
+}
+.ix-pillar-row:hover { background: rgba(11, 17, 26, 0.72); }
+.ix-pillar-row .ix-h3 { margin-bottom: .45rem; }
+.ix-pillar-row .ix-body { font-size: var(--ix-t-sm); }
+
+/* ---------- capability rows (service pages) ----------
+   Rows are separated by hairlines and washed with a translucent ink rather
+   than filled — the landscape stays visible behind the content instead of
+   being covered by a stack of opaque cards. */
+.ix-caps { display: grid; border-top: 1px solid var(--ix-line); }
+.ix-cap-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.6rem);
+  padding: clamp(1.5rem, 3vw, 2.4rem) clamp(0rem, 1.2vw, 1rem);
+  border-bottom: 1px solid var(--ix-line);
+  background: rgba(4, 7, 12, 0.42);
+  transition: background var(--ix-dur) var(--ix-ease);
+}
+.ix-cap-row:hover { background: rgba(11, 17, 26, 0.72); }
+.ix-cap-title { margin-bottom: .6rem; }
+.ix-cap-row .ix-body { max-width: 58ch; }
+
+/* ---------- approach steps ---------- */
+.ix-steps { display: grid; border-top: 1px solid var(--ix-line); list-style: none; }
+.ix-step {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.6rem);
+  padding: clamp(1.2rem, 2.4vw, 1.9rem) clamp(0rem, 1.2vw, 1rem);
+  border-bottom: 1px solid var(--ix-line);
+  background: rgba(4, 7, 12, 0.42);
+}
+.ix-step h3 { margin-bottom: .4rem; color: var(--ix-frost); }
+.ix-step .ix-body { font-size: var(--ix-t-sm); max-width: 62ch; }
+
+/* ---------- technical capability list ---------- */
+.ix-tech-list {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: .1rem clamp(2rem, 5vw, 4rem);
+}
+.ix-tech-item {
+  display: grid; grid-template-columns: auto 1fr; align-items: start; gap: .9rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--ix-line);
+  font-size: var(--ix-t-sm); color: var(--ix-mist);
+}
+.ix-tech-item .ix-btn-mark { margin-top: .45em; width: 5px; height: 5px; }
+
+/* ---------- related services ---------- */
+.ix-related { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--ix-line); border: 1px solid var(--ix-line); }
+.ix-related-item {
+  display: grid; gap: .7rem; align-content: start;
+  padding: clamp(1.4rem, 2.6vw, 2rem);
+  background: rgba(4, 7, 12, 0.55);
+  transition: background var(--ix-dur) var(--ix-ease);
+}
+.ix-related-item:hover { background: rgba(11, 17, 26, 0.82); }
+.ix-related-item:hover .ix-h3 { color: var(--ix-ice); }
+.ix-related-item .ix-h3 { transition: color var(--ix-dur) var(--ix-ease); }
+@media (max-width: 860px) { .ix-related { grid-template-columns: 1fr; } }
+
+/* ---------- services index rows ---------- */
+.ix-svc-row--link { display: grid; grid-template-columns: auto minmax(0,1fr) auto; text-decoration: none; }
+.ix-svc-standfirst { display: block; margin-top: .9rem; font-size: var(--ix-t-sm); max-width: 54ch; }
+.ix-svc-go { display: flex; align-items: center; color: var(--ix-ice); }
+.ix-svc-go .ix-tlink-rule { display: block; width: 28px; height: 1px; background: currentColor; transition: width var(--ix-dur) var(--ix-ease-out); }
+.ix-svc-row--link:hover .ix-svc-go .ix-tlink-rule { width: 52px; }
+.ix-svc-row--link:hover .ix-svc-title { color: var(--ix-ice); }
+
+/* ---------- mountain cross-section ---------- */
+.ix-xsection { width: 100%; max-width: 720px; margin-inline: auto; }
+.ix-xsection svg { width: 100%; height: auto; overflow: visible; }
+.ix-stratum line { stroke: var(--ix-line-2); stroke-width: 1; }
+.ix-stratum-label {
+  font-family: var(--ix-mono); font-size: 10px; letter-spacing: .18em;
+  fill: var(--ix-frost);
+}
+.ix-stratum-note { font-family: var(--ix-mono); font-size: 9px; letter-spacing: .1em; fill: var(--ix-steel); }
+.ix-xsection-flow {
+  stroke: var(--ix-ice); stroke-width: 1.5; fill: none;
+  stroke-dasharray: 6 10;
+  animation: ix-flow 3.4s linear infinite;
+}
+@keyframes ix-flow { to { stroke-dashoffset: -32; } }
+@media (prefers-reduced-motion: reduce) { .ix-xsection-flow { animation: none; } }
+
+/* ---------- prose (markdown body) ---------- */
+.ix-prose { color: var(--ix-mist); }
+.ix-prose > * + * { margin-top: 1.15em; }
+.ix-prose p { max-width: 66ch; text-wrap: pretty; }
+.ix-prose p:first-child { color: var(--ix-frost); font-size: clamp(1.05rem, 1.4vw, 1.22rem); line-height: 1.55; }
+.ix-prose a { color: var(--ix-ice); border-bottom: 1px solid var(--ix-line-2); }
+.ix-prose a:hover { border-bottom-color: var(--ix-ice); }
+.ix-prose h2 { font-size: var(--ix-t-h3); color: var(--ix-frost); margin-top: 2.2em; }
+.ix-prose ul { display: grid; gap: .7rem; margin-top: 1.2em; }
+.ix-prose ul li { display: grid; grid-template-columns: auto 1fr; gap: .8rem; }
+.ix-prose ul li::before { content: ''; width: 5px; height: 5px; margin-top: .62em; background: var(--ix-ice); transform: rotate(45deg); }
+
+.ix-page-aside { border: 0; padding: 0; }
+/* The standfirst sits opposite the headline, where the terrain is at its
+   brightest — it needs its own reading surface rather than relying on the
+   scrim, which only covers the left of the frame. */
+.ix-phero-standfirst {
+  margin-top: 1.4rem;
+  padding: 1.1rem 1.3rem;
+  background: rgba(5, 8, 12, 0.62);
+  border-left: 1px solid var(--ix-line-2);
+}
+.ix-phero-standfirst .ix-body { color: var(--ix-frost); }
+@media (max-width: 1024px) { .ix-phero-standfirst { background: rgba(5, 8, 12, 0.5); } }
+.ix-cta-actions { display: flex; flex-wrap: wrap; gap: .9rem; }
+
+/* ---------- drawer sub-list ---------- */
+.ix-drawer-sub { display: grid; gap: .55rem; margin-bottom: 1.6rem; }
+.ix-drawer-sub a { font-size: var(--ix-t-sm); color: var(--ix-mist); }
+.ix-drawer-sub a:hover { color: var(--ix-ice); }
+
+@media (max-width: 680px) {
+  .ix-tech-list { grid-template-columns: 1fr; }
+}

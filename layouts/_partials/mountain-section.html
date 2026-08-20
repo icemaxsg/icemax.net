@@ -1,0 +1,38 @@
+{{/* Cross-section of the massif: the stack the traffic passes through, drawn
+     as strata inside the peak rather than as a list beside a paragraph. */}}
+<div class="ix-xsection ix-reveal" role="img"
+     aria-label="Cross-section of the infrastructure stack: edge, security, network, compute and data layers within the mountain.">
+  <svg viewBox="0 0 640 420" focusable="false">
+    <defs>
+      <clipPath id="ix-peak-clip">
+        <path d="M320 28 L596 392 L44 392 Z" />
+      </clipPath>
+      <linearGradient id="ix-peak-face" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1EFFD9" stop-opacity=".16" />
+        <stop offset="1" stop-color="#2764FF" stop-opacity=".05" />
+      </linearGradient>
+    </defs>
+
+    <path d="M320 28 L596 392 L44 392 Z" fill="url(#ix-peak-face)" stroke="rgba(30,255,217,.45)" />
+
+    <g clip-path="url(#ix-peak-clip)" class="ix-xsection-strata">
+      {{- $strata := slice
+        (dict "y" 120 "label" "EDGE"     "note" "Perimeter filtering")
+        (dict "y" 178 "label" "SECURITY" "note" "WAF · Zero Trust")
+        (dict "y" 236 "label" "NETWORK"  "note" "Routing · interconnect")
+        (dict "y" 294 "label" "COMPUTE"  "note" "EC2 · GCE · GKE")
+        (dict "y" 352 "label" "DATA"     "note" "Storage · backup")
+      -}}
+      {{- range $strata }}
+      <g class="ix-stratum">
+        <line x1="20" y1="{{ .y }}" x2="620" y2="{{ .y }}" />
+        <text x="52" y="{{ sub .y 8 }}" class="ix-stratum-label">{{ .label }}</text>
+        <text x="568" y="{{ sub .y 8 }}" text-anchor="end" class="ix-stratum-note">{{ .note }}</text>
+      </g>
+      {{- end }}
+      <path class="ix-xsection-flow" d="M320 392 V120" />
+    </g>
+
+    <circle cx="320" cy="28" r="4" fill="#1EFFD9" />
+  </svg>
+</div>

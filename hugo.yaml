@@ -1,0 +1,74 @@
+baseURL: "https://icemax.net/"
+locale: "en-SG"
+title: "iceMax SG Pte. Ltd."
+enableRobotsTXT: true
+enableGitInfo: false
+
+# Clean URLs: /services/cloudflare/ rather than /services/cloudflare.html
+uglyURLs: false
+canonifyURLs: false
+
+params:
+  company: "iceMax SG Pte. Ltd."
+  shortName: "iceMax"
+  description: "Singapore-based technology infrastructure provider specialising in edge network security and managed multi-cloud deployment."
+  address:
+    street: "35 Ann Siang Road"
+    locality: "Singapore"
+    postalCode: "069714"
+    country: "SG"
+  email:
+    general: "bd@icemax.net"
+    careers: "careers@icemax.net"
+
+menus:
+  main:
+    - name: "What We Do"
+      pageRef: /what-we-do
+      weight: 10
+    - name: "Who We Are"
+      pageRef: /who-we-are
+      weight: 20
+    - name: "What's Happening"
+      pageRef: /whats-happening
+      weight: 30
+    - name: "Join Us"
+      pageRef: /join-us
+      weight: 40
+    - name: "Contact Us"
+      pageRef: /contact-us
+      weight: 50
+    - name: "Partner Us"
+      pageRef: /partner-us
+      weight: 60
+
+  # Legal, surfaced in the footer only.
+  legal:
+    - name: "Terms of Use"
+      pageRef: /legal/terms-of-use
+      weight: 10
+    - name: "Privacy Policy"
+      pageRef: /legal/privacy-policy
+      weight: 20
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+outputs:
+  home: [HTML]
+  section: [HTML]
+  page: [HTML]
+
+sitemap:
+  changefreq: monthly
+  priority: 0.6
+  filename: sitemap.xml
+
+build:
+  writeStats: false
+
+disableKinds: ["taxonomy", "term"]

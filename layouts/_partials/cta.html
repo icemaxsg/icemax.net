@@ -1,0 +1,21 @@
+{{/* dict: label, title, primary {text,url}, secondary {text,url} (optional) */}}
+<section class="ix-section ix-section--tight">
+  <div class="ix-wrap">
+    <div class="ix-contact-card ix-reveal">
+      <div class="ix-grid" style="align-items:end">
+        <div class="ix-c-7">
+          {{ with .label }}<p class="ix-label ix-label--ice" style="margin-bottom:1.4rem">{{ . }}</p>{{ end }}
+          <h2 class="ix-h2">{{ .title | safeHTML }}</h2>
+        </div>
+        <div class="ix-c-5 ix-cta-actions">
+          <a class="ix-btn ix-btn--solid" href="{{ .primary.url }}">{{ .primary.text }}
+          </a>
+          {{- with .secondary }}
+          <a class="ix-btn" href="{{ .url }}">{{ .text }}
+          </a>
+          {{- end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

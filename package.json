@@ -1,0 +1,15 @@
+{
+  "name": "icemax-net",
+  "version": "1.0.0",
+  "description": "iceMax SG Pte. Ltd. — corporate website. Hugo site; npm supplies the browser modules bundled by Hugo's esbuild pipeline.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "hugo server --disableFastRender",
+    "build": "hugo --gc --minify"
+  },
+  "dependencies": {
+    "lenis": "^1.3.26",
+    "three": "^0.185.1"
+  }
+}

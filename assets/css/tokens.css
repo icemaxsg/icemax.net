@@ -1,0 +1,72 @@
+/* ============================================================
+   iceMax — CRYO design system
+   Tokens only. Derived from the brand mark: mint-ice (#1EFFD9)
+   melting through cyan into electric blue (#2764FF) on near-black.
+   ============================================================ */
+:root {
+  /* --- ground: cold, near-black --- */
+  --ix-void:   #05080C;
+  --ix-abyss:  #080C12;
+  --ix-slate:  #0C1219;
+  --ix-ridge:  #121922;
+
+  /* --- structure --- */
+  --ix-line:   rgba(226, 240, 246, 0.085);
+  --ix-line-2: rgba(226, 240, 246, 0.17);
+  --ix-line-3: rgba(226, 240, 246, 0.30);
+
+  /* --- type --- */
+  --ix-frost:  #F0F4F7;
+  --ix-mist:   #9BA7B4;
+  --ix-steel:  #78838F;   /* 5.2:1 on the void — labels are 11px, so AA applies */
+
+  /* --- accent ---
+     The mark's mint-to-blue spectrum belongs in the mark and in the terrain,
+     where it is carrying data. As interface colour it reads synthetic, so the
+     chrome takes a single cold blue and uses it sparingly: active state, one
+     rule, a numeral. Everything else is greyscale. */
+  --ix-ice:    #6FC3DE;   /* the one accent (10:1 on the ground) */
+  --ix-cyan:   #5FB0CC;
+  --ix-azure:  #4E93B4;
+  --ix-blue:   #3C7A9C;
+  --ix-ink:    #05080C;   /* text on light fills */
+
+  /* Fills are flat. A gradient on a control is decoration, not information. */
+  --ix-fill:      var(--ix-frost);
+  --ix-fill-hover:#FFFFFF;
+
+  --ix-accent-dim: rgba(111, 195, 222, 0.26);
+
+  /* --- type families --- */
+  --ix-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ix-sans:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ix-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* --- fluid type scale (editorial, dramatic at the top end) --- */
+  --ix-t-mega: clamp(2.9rem, 8.2vw, 7.6rem);
+  --ix-t-h1:   clamp(2.6rem, 7.4vw, 6.6rem);
+  --ix-t-h2:   clamp(2rem, 4.6vw, 4rem);
+  --ix-t-h3:   clamp(1.35rem, 2.2vw, 2rem);
+  --ix-t-h4:   clamp(1.1rem, 1.4vw, 1.32rem);
+  --ix-t-body: clamp(1rem, 1.05vw, 1.12rem);
+  --ix-t-sm:   0.9375rem;
+  --ix-t-label: 0.6875rem;
+  --ix-track: 0.11em;
+
+  /* --- space --- */
+  --ix-gutter: clamp(1.25rem, 4.4vw, 4.5rem);
+  --ix-max:    1440px;
+  --ix-measure: 62ch;
+  --ix-section: clamp(6rem, 13vh, 11rem);
+
+  /* --- motion --- */
+  --ix-ease:      cubic-bezier(0.22, 0.68, 0.24, 1);
+  --ix-ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ix-dur:       0.62s;
+  --ix-dur-fast:  0.28s;
+
+  --ix-radius: 2px;   /* crystalline, not rounded-SaaS */
+  --ix-nav-h: 84px;
+}
+
+@media (max-width: 860px) { :root { --ix-nav-h: 68px; } }

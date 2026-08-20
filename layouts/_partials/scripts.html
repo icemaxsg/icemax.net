@@ -1,0 +1,9 @@
+{{- $opts := dict
+  "minify" hugo.IsProduction
+  "target" "es2020"
+  "format" "esm"
+  "sourceMap" (cond hugo.IsProduction "" "inline")
+-}}
+{{- $js := resources.Get "js/main.js" | js.Build $opts -}}
+{{- if hugo.IsProduction }}{{ $js = $js | fingerprint }}{{ end -}}
+<script type="module" src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }}></script>

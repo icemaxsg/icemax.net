@@ -1,0 +1,85 @@
+{{ define "main" }}
+
+{{/* ---------- HERO ---------- */}}
+<section class="ix-hero">
+  <div class="ix-wrap">
+    <div class="ix-grid">
+      <div class="ix-c-8">
+        <p class="ix-label ix-label--ice ix-reveal ix-hero-kicker">{{ .Params.hero.kicker }}</p>
+        <h1 class="ix-mega ix-hero-title">
+          {{- range .Params.hero.headline }}
+          <span class="ix-line-mask"><span{{ if .accent }} class="ix-grad"{{ end }}>{{ .text }}</span></span>
+          {{- end }}
+        </h1>
+        <p class="ix-lead ix-hero-sub ix-reveal d2">{{ .Params.hero.standfirst }}</p>
+        <div class="ix-hero-actions ix-reveal d3">
+          <a class="ix-btn ix-btn--solid" href="{{ .Params.hero.primary.url | relURL }}">{{ .Params.hero.primary.text }}
+          </a>
+          <a class="ix-btn" href="{{ .Params.hero.secondary.url | relURL }}">{{ .Params.hero.secondary.text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{/* A scroll affordance, nothing more. Coordinates and layer captions here
+       were decoration dressed as telemetry. */}}
+  <div class="ix-hero-meta">
+    <div class="ix-scroll-cue">
+      <span class="ix-scroll-cue-rail" aria-hidden="true"></span>
+      <span class="ix-label">Scroll</span>
+    </div>
+  </div>
+</section>
+
+{{/* ---------- THE JOURNEY ---------- */}}
+{{- range $i, $s := .Params.story }}
+<section class="ix-section ix-story" id="{{ $s.id }}">
+  {{ if gt $i 0 }}{{ partial "peak-rule.html" $ }}{{ end }}
+  <div class="ix-wrap">
+    {{ partial "section-head.html" (dict "index" $s.number "label" $s.label "title" $s.title) }}
+
+    <div class="ix-grid ix-story-body">
+      <div class="ix-c-6 ix-reveal">
+        <p class="ix-lead" style="color:var(--ix-frost);max-width:none">{{ $s.standfirst }}</p>
+        {{- with $s.body }}<p class="ix-body" style="max-width:none;margin-top:1.2rem">{{ . }}</p>{{ end }}
+        {{- with $s.link }}
+        <p style="margin-top:2.2rem">
+          <a class="ix-tlink" href="{{ .url | relURL }}">
+            <span class="ix-tlink-rule" aria-hidden="true"></span>{{ .text }}
+          </a>
+        </p>
+        {{- end }}
+      </div>
+
+      <div class="ix-c-6 ix-story-figure">
+        {{- if eq $s.figure "edge" }}{{ partial "edge-viz.html" $ }}
+        {{- else if eq $s.figure "topology" }}{{ partial "topology.html" $ }}
+        {{- else if eq $s.figure "section" }}{{ partial "mountain-section.html" $ }}
+        {{- else if eq $s.figure "pillars" }}
+          <div class="ix-pillar-stack ix-reveal d2">
+            {{- range $j, $p := $.Params.pillars }}
+            <div class="ix-pillar-row">
+              <span class="ix-index">{{ printf "%02d" (add $j 1) }}</span>
+              <div>
+                <h3 class="ix-h3">{{ $p.title }}</h3>
+                <p class="ix-body">{{ $p.description }}</p>
+              </div>
+            </div>
+            {{- end }}
+          </div>
+        {{- end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{- end }}
+
+{{ partial "cta.html" (dict
+  "label" "Contact"
+  "title" .Params.closing.title
+  "primary" (dict "text" .Params.closing.primary.text "url" (.Params.closing.primary.url | relURL))
+  "secondary" (dict "text" .Params.closing.secondary.text "url" (.Params.closing.secondary.url | relURL))
+) }}
+
+{{ end }}

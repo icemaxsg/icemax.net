@@ -1,0 +1,42 @@
+{{/* Traffic path. Layers illuminate as the matching service is selected. */}}
+<div class="ix-topo ix-reveal d2">
+  <svg viewBox="0 0 520 420" role="img" aria-label="Infrastructure topology: users connect through the Cloudflare edge to AWS and GCP compute, with cross-cloud connectivity and enterprise workflow systems.">
+    <path class="ix-topo-line" d="M260 372V318" />
+    <path class="ix-topo-flow" d="M260 372V318" />
+    <path class="ix-topo-line" d="M260 268V214" />
+    <path class="ix-topo-flow" d="M260 268V214" />
+    <path class="ix-topo-line" d="M260 214H140v-46M260 214h120v-46" />
+    <path class="ix-topo-line" d="M140 122V92h240v30" />
+    <path class="ix-topo-line" d="M260 92V54" />
+    <path class="ix-topo-line" d="M380 168h96v104h-52" stroke-dasharray="4 6" />
+
+    <g class="ix-topo-node" data-layer="aws gcp">
+      <rect x="196" y="26" width="128" height="30" />
+      <text x="260" y="45" text-anchor="middle">Multi-Cloud Core</text>
+    </g>
+    <g class="ix-topo-node" data-layer="aws">
+      <rect x="80" y="122" width="120" height="46" />
+      <text x="140" y="142" text-anchor="middle">AWS</text>
+      <text x="140" y="157" text-anchor="middle">EC2 · Backup</text>
+    </g>
+    <g class="ix-topo-node" data-layer="gcp">
+      <rect x="320" y="122" width="120" height="46" />
+      <text x="380" y="142" text-anchor="middle">GCP</text>
+      <text x="380" y="157" text-anchor="middle">GCE · GKE</text>
+    </g>
+    <g class="ix-topo-node" data-layer="enterprise-workflow">
+      <rect x="424" y="248" width="88" height="46" />
+      <text x="468" y="268" text-anchor="middle">Workspace</text>
+      <text x="468" y="283" text-anchor="middle">Lark</text>
+    </g>
+    <g class="ix-topo-node" data-layer="cloudflare">
+      <rect x="170" y="222" width="180" height="46" />
+      <text x="260" y="242" text-anchor="middle">Cloudflare Edge</text>
+      <text x="260" y="257" text-anchor="middle">WAF · Zero Trust · CDN</text>
+    </g>
+    <g class="ix-topo-node" data-layer="cloudflare aws gcp enterprise-workflow">
+      <rect x="196" y="372" width="128" height="30" />
+      <text x="260" y="391" text-anchor="middle">Users</text>
+    </g>
+  </svg>
+</div>

@@ -1,0 +1,47 @@
+{{ define "main" }}
+  {{ partial "page-hero.html" . }}
+
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      <div class="ix-grid" style="align-items:center">
+        <div class="ix-c-5">
+          <div class="ix-sec-meta" style="margin-bottom:2rem">
+            <span class="ix-index">01</span><span class="ix-label">Traffic Path</span>
+          </div>
+          <div class="ix-prose">{{ .Content }}</div>
+        </div>
+        <div class="ix-c-7">{{ partial "topology.html" . }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ix-section ix-section--flush-top" id="capabilities">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "02" "label" "Service Lines") }}
+      <div class="ix-svc">
+        {{- range .Pages.ByWeight }}
+        <article class="ix-svc-item" data-layer="{{ path.Base .RelPermalink }}">
+          <a class="ix-svc-row ix-svc-row--link" href="{{ .RelPermalink }}">
+            <span class="ix-index">{{ .Params.service_number }}</span>
+            <span>
+              <span class="ix-h2 ix-svc-title" style="display:block">{{ .Title }}</span>
+              <span class="ix-label{{ if .Params.core }} ix-label--ice{{ end }}">{{ .Params.tagline }}</span>
+              <span class="ix-svc-standfirst ix-body">{{ .Params.standfirst }}</span>
+            </span>
+            <span class="ix-svc-go" aria-hidden="true">
+              <span class="ix-tlink-rule"></span>
+            </span>
+          </a>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  {{ partial "cta.html" (dict
+    "label" "Enquiries"
+    "title" "Discuss an infrastructure requirement<br />with our engineering team."
+    "primary" (dict "text" "Make an Enquiry" "url" ("/contact-us/" | relURL))
+    "secondary" (dict "text" "Who We Are" "url" ("/who-we-are/" | relURL))
+  ) }}
+{{ end }}

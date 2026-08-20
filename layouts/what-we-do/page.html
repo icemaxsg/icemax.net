@@ -1,0 +1,87 @@
+{{ define "main" }}
+  {{ partial "page-hero.html" . }}
+
+  {{/* Introduction */}}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      <div class="ix-grid">
+        <div class="ix-c-4">
+          <div class="ix-sec-meta ix-page-aside">
+            <span class="ix-index">{{ .Params.service_number }}</span>
+            <span class="ix-label">Service Overview</span>
+          </div>
+        </div>
+        <div class="ix-c-8 ix-reveal ix-prose">{{ .Content }}</div>
+      </div>
+    </div>
+  </section>
+
+  {{/* What we provide */}}
+  {{ with .Params.capabilities }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "01" "label" "What We Provide") }}
+      {{ partial "capabilities.html" (dict "items" .) }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Approach */}}
+  {{ with .Params.approach }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "02" "label" "How We Approach the Engagement") }}
+      <ol class="ix-steps">
+        {{- range $i, $st := . }}
+        <li class="ix-step ix-reveal">
+          <span class="ix-index">{{ printf "%02d" (add $i 1) }}</span>
+          <div>
+            <h3 class="ix-h4">{{ $st.title }}</h3>
+            <p class="ix-body">{{ $st.description }}</p>
+          </div>
+        </li>
+        {{- end }}
+      </ol>
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Technical detail */}}
+  {{ with .Params.technical }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "03" "label" "Technical Capabilities") }}
+      <ul class="ix-tech-list">
+        {{- range . }}<li class="ix-tech-item">{{ . }}</li>{{- end }}
+      </ul>
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Related services */}}
+  {{ with .Parent }}
+  <section class="ix-section ix-section--flush-top">
+    <div class="ix-wrap">
+      {{ partial "section-head.html" (dict "index" "04" "label" "Related Services") }}
+      <div class="ix-related">
+        {{- range .Pages.ByWeight }}
+          {{- if ne .RelPermalink $.RelPermalink }}
+          <a class="ix-related-item" href="{{ .RelPermalink }}">
+            <span class="ix-index">{{ .Params.service_number }}</span>
+            <span class="ix-h3">{{ .Params.short_title | default .Title }}</span>
+            <span class="ix-label">{{ .Params.tagline }}</span>
+          </a>
+          {{- end }}
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ partial "cta.html" (dict
+    "label" "Enquiries"
+    "title" .Params.cta_title
+    "primary" (dict "text" "Make an Enquiry" "url" ("/contact-us/" | relURL))
+    "secondary" (dict "text" "What We Do" "url" ("/what-we-do/" | relURL))
+  ) }}
+{{ end }}

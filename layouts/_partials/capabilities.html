@@ -1,0 +1,15 @@
+{{/* Numbered capability list. Editorial rows, not cards.
+     dict: items (slice of {title, description}), heading (optional) */}}
+{{- with .items }}
+<div class="ix-caps">
+  {{- range $i, $c := . }}
+  <div class="ix-cap-row">
+    <span class="ix-index">{{ printf "%02d" (add $i 1) }}</span>
+    <div>
+      <h3 class="ix-h3 ix-cap-title">{{ $c.title }}</h3>
+      <p class="ix-body">{{ $c.description }}</p>
+    </div>
+  </div>
+  {{- end }}
+</div>
+{{- end }}

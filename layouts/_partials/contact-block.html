@@ -1,0 +1,32 @@
+<section class="ix-section ix-section--flush-top">
+  <div class="ix-wrap">
+    <div class="ix-grid">
+      <div class="ix-c-7">
+        <div class="ix-contact-card ix-reveal">
+          <div>
+            <p class="ix-label" style="margin-bottom:1rem">General Enquiries</p>
+            <a class="ix-contact-mail" href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}
+            </a>
+          </div>
+          <hr class="ix-rule ix-rule--ice" />
+          <div>
+            <p class="ix-label" style="margin-bottom:1rem">Talent Intake</p>
+            <a class="ix-tlink" href="mailto:{{ site.Params.email.careers }}">
+              <span class="ix-tlink-rule" aria-hidden="true"></span>{{ site.Params.email.careers }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="ix-c-5 ix-reveal d2">
+        <div class="ix-sec-meta" style="margin-bottom:1.8rem">
+          <span class="ix-index">02</span><span class="ix-label">Registered Office</span>
+        </div>
+        <address class="ix-addr">
+          <strong style="color:var(--ix-frost);font-weight:500">{{ site.Title }}</strong><br />
+          {{ site.Params.address.street }}<br />
+          {{ site.Params.address.locality }} {{ site.Params.address.postalCode }}
+        </address>
+      </div>
+    </div>
+  </div>
+</section>

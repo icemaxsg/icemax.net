@@ -1,0 +1,361 @@
+/* ============================================================
+   iceMax — components: nav, actions, panels, footer, motion
+   ============================================================ */
+
+/* ---------- WebGL stage: fixed behind everything ---------- */
+.ix-stage {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: 0; transition: opacity 1.6s var(--ix-ease-out);
+}
+.ix-stage.is-ready { opacity: 1; }
+
+/* Scrim: sits between the terrain and the type. The landscape is allowed to be
+   busy; the reading column is not. Sits at z 0 after the canvas in the DOM, so
+   it paints over the stage and under .ix-shell. */
+.ix-scrim {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(5,8,12,.92) 0%, rgba(5,8,12,.62) 26%, rgba(5,8,12,.10) 52%, transparent 68%),
+    linear-gradient(0deg, rgba(5,8,12,.72) 0%, transparent 20%),
+    linear-gradient(180deg, rgba(5,8,12,.72) 0%, transparent 16%);
+}
+@media (max-width: 900px) {
+  /* On phones the type sits over the whole frame, so the scrim reads as a
+     vertical gradient — but stays light enough that the massif is still there.
+     The mountain is the idea; it does not get switched off on mobile. */
+  .ix-scrim {
+    background:
+      linear-gradient(180deg, rgba(5,8,12,.80) 0%, rgba(5,8,12,.30) 46%, rgba(5,8,12,.78) 100%);
+  }
+}
+.ix-stage canvas { width: 100% !important; height: 100% !important; }
+
+/* the still frame shown before/instead of WebGL */
+.ix-stage-fallback {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(70% 50% at 50% 76%, rgba(39,100,255,.16), transparent 70%),
+    radial-gradient(40% 30% at 50% 62%, rgba(30,255,217,.10), transparent 70%);
+}
+
+/* ---------- navigation ---------- */
+.ix-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--ix-nav-h);
+  display: flex; align-items: center;
+  transition: background var(--ix-dur) var(--ix-ease), border-color var(--ix-dur) var(--ix-ease);
+  border-bottom: 1px solid transparent;
+}
+.ix-nav.is-stuck {
+  background: color-mix(in srgb, var(--ix-void) 76%, transparent);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom-color: var(--ix-line);
+}
+.ix-nav-inner {
+  width: 100%; max-width: var(--ix-max); margin-inline: auto;
+  padding-inline: var(--ix-gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+}
+.ix-brand { display: flex; align-items: center; gap: .8rem; flex-shrink: 0; }
+.ix-brand svg, .ix-brand img { height: 30px; width: auto; }
+.ix-brand-name {
+  font-family: var(--ix-display); font-size: 1.12rem; font-weight: 600;
+  letter-spacing: -.02em;
+}
+.ix-brand-name b { font-weight: 500; color: var(--ix-mist); }
+
+.ix-nav-links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.4rem); }
+.ix-nav-link {
+  position: relative; padding: .4rem 0;
+  font-family: var(--ix-sans); font-size: 0.9375rem; font-weight: 450;
+  color: var(--ix-mist);
+  transition: color var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-nav-link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--ix-ice); transform: scaleX(0); transform-origin: right;
+  transition: transform var(--ix-dur) var(--ix-ease-out);
+}
+.ix-nav-link:hover { color: var(--ix-frost); }
+.ix-nav-link:hover::after, .ix-nav-link[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+.ix-nav-link[aria-current="page"] { color: var(--ix-frost); }
+
+/* scroll progress hairline under the nav */
+.ix-progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 101;
+  width: 100%; transform: scaleX(0); transform-origin: left;
+  background: var(--ix-frost);
+}
+
+/* ---------- actions ----------
+   Restraint, not absence. The craft is in the detail: a cut corner echoing the
+   crystal language, a rule that draws itself under the label, and an arrow that
+   commits forward on hover. No gradients, no ornament glyphs. */
+.ix-btn {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  font-family: var(--ix-sans);
+  font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.005em;
+  color: var(--ix-frost);
+  background-color: transparent;
+  border: 1px solid var(--ix-line-2);
+  border-radius: var(--ix-radius);
+  min-height: 48px; white-space: nowrap;
+  /* the rule that draws under the label */
+  background-image: linear-gradient(var(--ix-ice), var(--ix-ice));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size .45s var(--ix-ease-out),
+              border-color var(--ix-dur-fast) var(--ix-ease),
+              background-color var(--ix-dur-fast) var(--ix-ease),
+              color var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-btn::after {
+  content: '';
+  width: 15px; height: 8px; flex: none;
+  background-color: currentColor;
+  /* a drawn arrow, not a text glyph — it stays crisp and can be animated */
+  -webkit-mask: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 8'%3E%3Cpath d='M0 4h13M9.5 0.6 13.4 4 9.5 7.4' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E");
+  mask: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 8'%3E%3Cpath d='M0 4h13M9.5 0.6 13.4 4 9.5 7.4' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E");
+  opacity: .55;
+  transition: transform .38s var(--ix-ease-out), opacity var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-btn:hover {
+  border-color: var(--ix-line-3);
+  background-color: rgba(240, 244, 247, 0.04);
+  background-size: 100% 1px;
+}
+.ix-btn:hover::after { transform: translateX(4px); opacity: 1; }
+
+/* primary: a light plate cut at the corner, so it reads as a machined object */
+.ix-btn--solid {
+  color: var(--ix-ink);
+  background-color: var(--ix-fill);
+  border-color: var(--ix-fill);
+  background-image: linear-gradient(var(--ix-ink), var(--ix-ink));
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+.ix-btn--solid:hover {
+  background-color: var(--ix-fill-hover);
+  border-color: var(--ix-fill-hover);
+  color: var(--ix-ink);
+}
+.ix-btn--solid::after { opacity: .7; }
+
+/* quiet variant for dense rows */
+.ix-btn--bare { border-color: transparent; padding-inline: 0; }
+.ix-btn--bare:hover { background-color: transparent; }
+
+.ix-btn-mark { display: none; }
+
+/* text link with a tracing rule */
+.ix-tlink {
+  display: inline-flex; align-items: center; gap: .75rem;
+  font-family: var(--ix-sans); font-size: 0.9375rem; font-weight: 500;
+  color: var(--ix-frost);
+}
+.ix-tlink:hover { color: var(--ix-ice); }
+.ix-tlink .ix-tlink-rule {
+  width: 28px; height: 1px; background: currentColor;
+  transition: width var(--ix-dur) var(--ix-ease-out);
+}
+.ix-tlink:hover .ix-tlink-rule { width: 46px; }
+
+/* ---------- panel: crystalline, faceted, never a rounded card ---------- */
+.ix-panel {
+  position: relative;
+  padding: clamp(1.6rem, 3vw, 2.6rem);
+  background: linear-gradient(160deg, rgba(240,244,247,.045), rgba(240,244,247,.012));
+  border: 1px solid var(--ix-line);
+  border-radius: var(--ix-radius);
+  /* cut corner — the crystal facet */
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  transition: border-color var(--ix-dur) var(--ix-ease), background var(--ix-dur) var(--ix-ease), transform var(--ix-dur) var(--ix-ease);
+}
+
+.ix-panel:hover { border-color: var(--ix-line-2); transform: translateY(-3px); }
+
+
+/* ---------- reveal ----------
+   Content is visible by default. The hidden starting state is applied only
+   once scripting has announced itself (`.js` on <html>), so a blocked, failed
+   or slow bundle can never leave the page blank. Reveal is an enhancement. */
+.ix-reveal { opacity: 1; transform: none; }
+.js .ix-reveal { opacity: 0; transform: translateY(26px); will-change: opacity, transform; }
+.js .ix-reveal.is-in { opacity: 1; transform: none; transition: opacity 1s var(--ix-ease-out), transform 1s var(--ix-ease-out); }
+.ix-reveal.d1.is-in { transition-delay: .08s; }
+.ix-reveal.d2.is-in { transition-delay: .16s; }
+.ix-reveal.d3.is-in { transition-delay: .24s; }
+.ix-reveal.d4.is-in { transition-delay: .32s; }
+
+/* line-by-line heading reveal */
+/* masks clip to the line box, so pad the box and pull it back — otherwise
+   tight display line-heights shear the caps and descenders */
+.ix-line-mask { display: block; overflow: hidden; padding-block: 0.09em; margin-block: -0.09em; }
+.ix-line-mask > span { display: block; transform: none; }
+.js .ix-line-mask > span { transform: translateY(110%); }
+.js .is-in .ix-line-mask > span,
+.js .ix-line-mask.is-in > span { transform: none; transition: transform 1.05s var(--ix-ease-out); }
+.ix-line-mask:nth-child(2) > span { transition-delay: .07s; }
+.ix-line-mask:nth-child(3) > span { transition-delay: .14s; }
+.ix-line-mask:nth-child(4) > span { transition-delay: .21s; }
+
+/* ---------- footer ---------- */
+.ix-footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--ix-line);
+  background: linear-gradient(180deg, transparent, rgba(5,8,12,.92) 40%);
+  padding-block: clamp(3.5rem, 7vw, 5.5rem) 2rem;
+}
+.ix-footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); }
+.ix-footer-col h2, .ix-footer-col h4 { margin-bottom: 1.4rem; }
+.ix-footer-col ul { display: grid; gap: .85rem; }
+.ix-footer-col a { color: var(--ix-mist); font-size: var(--ix-t-sm); transition: color var(--ix-dur-fast) var(--ix-ease); }
+.ix-footer-col a:hover { color: var(--ix-ice); }
+.ix-footer-bottom {
+  margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: 1.6rem;
+  border-top: 1px solid var(--ix-line);
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between;
+}
+@media (max-width: 860px) {
+  .ix-footer-grid { grid-template-columns: 1fr 1fr; }
+  .ix-footer-col--brand { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) { .ix-footer-grid { grid-template-columns: 1fr; } }
+
+/* ---------- mobile navigation: full-bleed, intentional, not a collapsed desktop ---------- */
+.ix-burger {
+  display: none; position: relative; width: 44px; height: 44px;
+  margin-right: -10px; align-items: center; justify-content: center;
+}
+.ix-burger span {
+  position: absolute; left: 11px; width: 22px; height: 1.5px;
+  background: var(--ix-frost);
+  transition: transform var(--ix-dur) var(--ix-ease), opacity var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-burger span:nth-child(1) { transform: translateY(-4px); }
+.ix-burger span:nth-child(2) { transform: translateY(4px); }
+.ix-burger[aria-expanded="true"] span:nth-child(1) { transform: rotate(45deg); }
+.ix-burger[aria-expanded="true"] span:nth-child(2) { transform: rotate(-45deg); }
+
+.ix-drawer {
+  position: fixed; inset: 0; z-index: 99;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(var(--ix-nav-h) + 2rem) var(--ix-gutter) 2.5rem;
+  background: color-mix(in srgb, var(--ix-void) 94%, transparent);
+  backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  /* six items plus an expanded group exceeds a phone viewport — the panel
+     scrolls rather than hiding entries behind the footer action */
+  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  gap: 2rem;
+  transition: opacity var(--ix-dur) var(--ix-ease), visibility var(--ix-dur);
+}
+.ix-drawer-foot { padding-top: 1rem; }
+.ix-drawer.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+.ix-drawer-links { display: grid; gap: .35rem; }
+.ix-drawer-links a {
+  display: flex; align-items: baseline; gap: 1.1rem;
+  padding: .55rem 0; min-height: 52px;
+  font-family: var(--ix-display); font-size: clamp(2rem, 9vw, 3.2rem);
+  line-height: 1; letter-spacing: -.04em; text-transform: uppercase;
+  border-bottom: 1px solid var(--ix-line);
+  opacity: 0; transform: translateY(14px);
+}
+.ix-drawer.is-open .ix-drawer-links a { opacity: 1; transform: none; transition: opacity .5s var(--ix-ease-out), transform .5s var(--ix-ease-out); }
+.ix-drawer.is-open .ix-drawer-links a:nth-child(1) { transition-delay: .06s; }
+.ix-drawer.is-open .ix-drawer-links a:nth-child(2) { transition-delay: .12s; }
+.ix-drawer.is-open .ix-drawer-links a:nth-child(3) { transition-delay: .18s; }
+.ix-drawer.is-open .ix-drawer-links a:nth-child(4) { transition-delay: .24s; }
+.ix-drawer.is-open .ix-drawer-links a:nth-child(5) { transition-delay: .30s; }
+.ix-drawer-links a[aria-current="page"] { color: var(--ix-ice); }
+.ix-drawer-links .ix-index { font-size: .6rem; }
+.ix-drawer-foot { display: grid; gap: 1rem; }
+
+@media (max-width: 900px) {
+  .ix-nav-links, .ix-nav-cta { display: none; }
+  .ix-burger { display: flex; }
+}
+@media (min-width: 901px) {
+  .ix-drawer { display: none; }
+}
+body.ix-locked { overflow: hidden; }
+
+/* ---------- dropdown navigation ---------- */
+.ix-nav-item { position: relative; display: flex; }
+.ix-nav-toggle {
+  display: inline-flex; align-items: center; gap: .5rem;
+  cursor: pointer; background: none; border: 0;
+}
+.ix-nav-chevron {
+  width: 7px; height: 7px; flex: none; margin-top: -3px;
+  border-right: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--ix-dur-fast) var(--ix-ease), opacity var(--ix-dur-fast) var(--ix-ease);
+  opacity: .55;
+}
+.ix-nav-item.is-open .ix-nav-chevron { transform: rotate(225deg) translate(-2px, -2px); opacity: 1; }
+
+.ix-nav-menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 300px; padding: .5rem;
+  background: color-mix(in srgb, var(--ix-void) 96%, transparent);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid var(--ix-line-2);
+  border-radius: var(--ix-radius);
+  box-shadow: 0 24px 60px -24px rgba(0,0,0,.85);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+.ix-nav-menu[hidden] { display: none; }
+.ix-nav-menu ul { display: grid; gap: 1px; }
+.ix-nav-menu a {
+  display: grid; gap: .18rem; padding: .8rem .9rem;
+  border-left: 1px solid transparent;
+  transition: background var(--ix-dur-fast) var(--ix-ease), border-color var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-nav-menu a:hover { background: rgba(240,244,247,.05); border-left-color: var(--ix-ice); }
+.ix-nav-menu-title { font-size: .9375rem; color: var(--ix-frost); }
+.ix-nav-menu-note {
+  font-family: var(--ix-mono); font-size: var(--ix-t-label);
+  letter-spacing: var(--ix-track); text-transform: uppercase; color: var(--ix-steel);
+}
+.ix-nav-menu-lead {
+  font-family: var(--ix-mono); font-size: var(--ix-t-label);
+  letter-spacing: var(--ix-track); text-transform: uppercase; color: var(--ix-steel);
+  border-bottom: 1px solid var(--ix-line); margin-bottom: .3rem; border-left-color: transparent;
+}
+
+/* ---------- drawer accordions ---------- */
+.ix-drawer-group { border-bottom: 1px solid var(--ix-line); }
+.ix-drawer-toggle {
+  display: flex; align-items: baseline; gap: 1.1rem; width: 100%;
+  padding: .55rem 0; min-height: 52px; cursor: pointer;
+  font-family: var(--ix-display); font-size: clamp(1.7rem, 7vw, 2.6rem);
+  line-height: 1; letter-spacing: -.04em; text-transform: uppercase; color: var(--ix-frost);
+}
+.ix-drawer-toggle .ix-nav-chevron { margin-left: auto; width: 9px; height: 9px; }
+.ix-drawer-group .ix-drawer-sub[hidden] { display: none; }
+.ix-drawer-group .ix-drawer-sub {
+  display: grid; gap: .1rem; padding: .2rem 0 1rem 2.4rem;
+}
+.ix-drawer-sub a {
+  padding: .7rem 0; min-height: 44px; display: flex; align-items: center;
+  font-family: var(--ix-sans); font-size: 1rem; text-transform: none;
+  letter-spacing: 0; color: var(--ix-mist); border-bottom: 0;
+}
+.ix-drawer-sub a:hover { color: var(--ix-ice); }
+.ix-drawer-links > .ix-drawer-group + a { border-top: 0; }
+
+.ix-footer-legal { display: flex; flex-wrap: wrap; gap: .6rem 1.8rem; }
+.ix-footer-legal a {
+  font-family: var(--ix-mono); font-size: var(--ix-t-label);
+  letter-spacing: var(--ix-track); text-transform: uppercase;
+  color: var(--f-fnt, var(--ix-steel));
+  transition: color var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-footer-legal a:hover { color: var(--ix-frost); }

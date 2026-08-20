@@ -1,0 +1,39 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {{- $title := cond .IsHome site.Title (printf "%s — %s" .Title site.Title) -}}
+  {{- with .Params.titleOverride }}{{ $title = . }}{{ end -}}
+  <title>{{ $title }}</title>
+
+  {{- $desc := .Description | default .Params.summary | default site.Params.description -}}
+  <meta name="description" content="{{ $desc }}" />
+  <link rel="canonical" href="{{ .Permalink }}" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#04070C" />
+  {{- if .Params.noindex }}<meta name="robots" content="noindex" />{{ end }}
+
+  <meta property="og:type" content="{{ cond .IsHome "website" "article" }}" />
+  <meta property="og:site_name" content="{{ site.Title }}" />
+  <meta property="og:title" content="{{ $title }}" />
+  <meta property="og:description" content="{{ $desc }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:locale" content="en_SG" />
+  <meta property="og:image" content="{{ "images/logo.svg" | absURL }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  {{/* Stylesheet: concatenated in cascade order. No PostCSS dependency — the
+       files are authored as plain CSS and simply stacked. */}}
+  {{- $order := slice "css/fonts.css" "css/tokens.css" "css/base.css" "css/layout.css" "css/components.css" "css/sections.css" "css/editorial.css" -}}
+  {{- $sheets := slice -}}
+  {{- range $order }}{{ $sheets = $sheets | append (resources.Get .) }}{{ end -}}
+  {{- $css := $sheets | resources.Concat "css/icemax.css" -}}
+  {{- if hugo.IsProduction }}{{ $css = $css | minify | fingerprint }}{{ end -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }} />
+
+  {{/* The display face carries the headline, so it is worth the early fetch. */}}
+  <link rel="preload" href="/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+  {{ partial "schema.html" . }}
+</head>

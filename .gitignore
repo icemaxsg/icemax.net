@@ -1,0 +1,19 @@
+# build output
+public/
+resources/
+.hugo_build.lock
+
+# dependencies
+node_modules/
+
+# editor / tooling
+.claude/
+.vscode/
+.idea/
+
+# os
+.DS_Store
+*.log
+
+# hugo-generated editor helper
+assets/jsconfig.json

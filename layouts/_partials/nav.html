@@ -1,0 +1,91 @@
+<a class="ix-skip" href="#main">Skip to content</a>
+<div class="ix-progress" aria-hidden="true"></div>
+<div class="ix-scrim" aria-hidden="true"></div>
+
+<header class="ix-nav">
+  <div class="ix-nav-inner">
+    <a class="ix-brand" href="{{ "/" | relURL }}" aria-label="{{ site.Title }} — home">
+      <img src="{{ "images/logo.svg" | relURL }}" alt="{{ site.Params.shortName }}" width="103" height="30" />
+    </a>
+
+    <nav class="ix-nav-links" aria-label="Primary">
+      {{- range $i, $e := site.Menus.main }}
+        {{- $page := "" -}}
+        {{- with .PageRef }}{{ $page = site.GetPage . }}{{ end -}}
+        {{- $children := cond (and $page $page.Pages) $page.Pages.ByWeight slice -}}
+        {{- $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
+
+        {{- if $children }}
+        <div class="ix-nav-item ix-nav-item--has-menu">
+          <button class="ix-nav-link ix-nav-toggle" type="button"
+                  aria-expanded="false" aria-controls="ix-menu-{{ $i }}"
+                  {{ if $active }}aria-current="page"{{ end }}>
+            {{ .Name }}
+            <span class="ix-nav-chevron" aria-hidden="true"></span>
+          </button>
+          <div class="ix-nav-menu" id="ix-menu-{{ $i }}" hidden>
+            <ul>
+              <li>
+                <a class="ix-nav-menu-lead" href="{{ .URL }}">
+                  <span>{{ .Name }} overview</span>
+                </a>
+              </li>
+              {{- range $children }}
+              <li>
+                <a href="{{ .RelPermalink }}">
+                  <span class="ix-nav-menu-title">{{ .Params.short_title | default .Title }}</span>
+                  {{ with .Params.tagline }}<span class="ix-nav-menu-note">{{ . }}</span>{{ end }}
+                </a>
+              </li>
+              {{- end }}
+            </ul>
+          </div>
+        </div>
+        {{- else }}
+        <a class="ix-nav-link" href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- end }}
+      {{- end }}
+    </nav>
+
+    <a class="ix-btn ix-nav-cta" href="{{ "/contact-us/" | relURL }}">Make an Enquiry</a>
+
+    <button class="ix-burger" type="button" aria-expanded="false" aria-controls="ix-drawer" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="ix-drawer" id="ix-drawer">
+  <nav class="ix-drawer-links" aria-label="Mobile">
+    {{- range $i, $e := site.Menus.main }}
+      {{- $page := "" -}}
+      {{- with .PageRef }}{{ $page = site.GetPage . }}{{ end -}}
+      {{- $children := cond (and $page $page.Pages) $page.Pages.ByWeight slice -}}
+      {{- $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
+
+      {{- if $children }}
+      <div class="ix-drawer-group">
+        <button class="ix-drawer-toggle" type="button" aria-expanded="false" aria-controls="ix-dm-{{ $i }}">
+          <span class="ix-index">{{ printf "%02d" (add $i 1) }}</span>
+          <span>{{ .Name }}</span>
+          <span class="ix-nav-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="ix-drawer-sub" id="ix-dm-{{ $i }}" hidden>
+          <a href="{{ .URL }}">{{ .Name }} overview</a>
+          {{- range $children }}
+          <a href="{{ .RelPermalink }}">{{ .Params.short_title | default .Title }}</a>
+          {{- end }}
+        </div>
+      </div>
+      {{- else }}
+      <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>
+        <span class="ix-index">{{ printf "%02d" (add $i 1) }}</span>
+        <span>{{ .Name }}</span>
+      </a>
+      {{- end }}
+    {{- end }}
+  </nav>
+  <div class="ix-drawer-foot">
+    <a class="ix-btn ix-btn--solid" href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}</a>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+{{- $org := dict
+  "@type" "Organization"
+  "@id" (printf "%s#organization" site.BaseURL)
+  "name" site.Title
+  "url" site.BaseURL
+  "logo" ("images/logo.svg" | absURL)
+  "description" site.Params.description
+  "email" site.Params.email.general
+  "address" (dict
+    "@type" "PostalAddress"
+    "streetAddress" site.Params.address.street
+    "addressLocality" site.Params.address.locality
+    "postalCode" site.Params.address.postalCode
+    "addressCountry" site.Params.address.country)
+-}}
+{{- if .IsHome -}}
+  {{- $web := dict "@type" "WebSite" "@id" (printf "%s#website" site.BaseURL) "url" site.BaseURL "name" site.Title "inLanguage" "en-SG" "publisher" (dict "@id" (printf "%s#organization" site.BaseURL)) -}}
+  <script type="application/ld+json">{{ (dict "@context" "https://schema.org" "@graph" (slice $org $web)) | jsonify | safeJS }}</script>
+{{- else -}}
+  {{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL) -}}
+  {{- $pos := 1 -}}
+  {{- range .Ancestors.Reverse -}}
+    {{- if not .IsHome -}}
+      {{- $pos = add $pos 1 -}}
+      {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .Title "item" .Permalink) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pos = add $pos 1 -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .Title "item" .Permalink) -}}
+  <script type="application/ld+json">{{ (dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs) | jsonify | safeJS }}</script>
+{{- end -}}

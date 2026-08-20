@@ -1,0 +1,15 @@
+{{/* The landscape. `scene_start` places the page on the camera track:
+     0 approaches the range, 1 stands above the network at the summit. */}}
+{{- $start := .Params.scene_start | default 0 -}}
+<div class="ix-stage-fallback" aria-hidden="true"></div>
+{{/* The 3D runtime is a separate bundle, fetched only when the browser is
+     idle — the page is complete and readable without it. */}}
+{{- $sceneOpts := dict "minify" hugo.IsProduction "target" "es2020" "format" "esm" "targetPath" "js/scene.js" -}}
+{{/* Always fingerprinted. Besides cache-busting, it guarantees the bundle is
+     published — the plain target is referenced only from an attribute, which
+     the dev server does not treat as a reason to write the file. */}}
+{{- $scene := resources.Get "js/scene-entry.js" | js.Build $sceneOpts | fingerprint -}}
+<div class="ix-stage" data-start="{{ $start }}" data-scene-src="{{ $scene.RelPermalink }}" aria-hidden="true">
+  <canvas id="ix-canvas"></canvas>
+</div>
+<div class="ix-scrim" aria-hidden="true"></div>

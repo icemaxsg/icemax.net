@@ -1,0 +1,13 @@
+{{/* Perimeter instrument: traffic approaches from the open network, is filtered
+     at the edge, and only legitimate traffic continues to origin. */}}
+<div class="ix-reveal d2">
+  <div class="ix-edge-vis">
+    <canvas class="ix-edge-canvas" role="img"
+      aria-label="Diagram: traffic approaching from the open network. Malicious traffic is filtered at the edge perimeter; legitimate traffic continues to origin infrastructure."></canvas>
+  </div>
+  <ul class="ix-edge-legend">
+    <li><span class="ix-swatch ix-swatch--threat" aria-hidden="true"></span><span class="ix-label">Volumetric attacks · bots · web exploits</span></li>
+    <li><span class="ix-swatch ix-swatch--edge" aria-hidden="true"></span><span class="ix-label">Edge perimeter — inspection and filtering</span></li>
+    <li><span class="ix-swatch ix-swatch--clean" aria-hidden="true"></span><span class="ix-label">Legitimate traffic to origin infrastructure</span></li>
+  </ul>
+</div>

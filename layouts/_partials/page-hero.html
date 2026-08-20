@@ -1,0 +1,20 @@
+{{/* Standard interior page opening: number, section label, title, standfirst. */}}
+<section class="ix-phero">
+  <div class="ix-wrap">
+    <p class="ix-label ix-label--ice ix-reveal ix-phero-kicker">
+      {{- with .Params.section_number }}{{ . }} — {{ end }}{{ .Params.kicker | default .Title -}}
+    </p>
+    <div class="ix-grid">
+      <h1 class="ix-h1 ix-c-8">
+        {{- range $i, $line := .Params.title_lines | default (slice .Title) }}
+        <span class="ix-line-mask"><span{{ if $line.accent }} class="ix-grad"{{ end }}>{{ $line.text | default $line }}</span></span>
+        {{- end }}
+      </h1>
+      {{- with .Params.standfirst }}
+      <div class="ix-c-4 ix-datum ix-reveal d2 ix-phero-standfirst">
+        <p class="ix-body">{{ . }}</p>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

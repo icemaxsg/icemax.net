@@ -1,0 +1,54 @@
+{{- $svc := site.GetPage "/what-we-do" -}}
+<footer class="ix-footer">
+  {{ partial "peak-rule.html" . }}
+  <div class="ix-wrap">
+    <div class="ix-footer-grid">
+      <div class="ix-footer-col ix-footer-col--brand">
+        <img src="{{ "images/logo.svg" | relURL }}" alt="{{ site.Params.shortName }}" width="137" height="40" style="margin-bottom:1.4rem" />
+        <p class="ix-body" style="font-size:var(--ix-t-sm);max-width:34ch">
+          Edge network security and managed multi-cloud infrastructure, engineered from Singapore.
+        </p>
+      </div>
+
+      <div class="ix-footer-col">
+        <h2 class="ix-label">What We Do</h2>
+        <ul>
+          {{- with $svc }}{{ range .Pages.ByWeight }}
+          <li><a href="{{ .RelPermalink }}">{{ .Params.short_title | default .Title }}</a></li>
+          {{- end }}{{ end }}
+        </ul>
+      </div>
+
+      <div class="ix-footer-col">
+        <h2 class="ix-label">Company</h2>
+        <ul>
+          {{- range site.Menus.main }}
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+          {{- end }}
+        </ul>
+      </div>
+
+      <div class="ix-footer-col">
+        <h2 class="ix-label">Contact</h2>
+        <ul>
+          <li><a href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}</a></li>
+          <li><a href="mailto:{{ site.Params.email.careers }}">{{ site.Params.email.careers }}</a></li>
+          <li>
+            <address class="ix-addr" style="font-size:var(--ix-t-sm)">
+              {{ site.Params.address.street }}<br />{{ site.Params.address.locality }} {{ site.Params.address.postalCode }}
+            </address>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ix-footer-bottom">
+      <p class="ix-label">© {{ now.Year }} {{ site.Title }}</p>
+      <nav class="ix-footer-legal" aria-label="Legal">
+        {{- range site.Menus.legal }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+        {{- end }}
+      </nav>
+    </div>
+  </div>
+</footer>

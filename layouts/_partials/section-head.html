@@ -1,0 +1,11 @@
+{{/* dict: index, label, title (optional), lead (optional), class (optional) */}}
+<div class="ix-sec-head {{ .class }}">
+  <div class="ix-sec-meta">
+    {{ with .index }}<span class="ix-index">{{ . }}</span>{{ end }}
+    <span class="ix-label">{{ .label }}</span>
+  </div>
+  {{- with .title }}
+  <h2 class="ix-h1 ix-sec-title">{{ . | safeHTML }}</h2>
+  {{- end }}
+  {{- with .lead }}<p class="ix-lead">{{ . | safeHTML }}</p>{{ end }}
+</div>
