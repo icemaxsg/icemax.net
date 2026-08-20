@@ -1,0 +1,5 @@
+{{- /* Resolve an internal path against the current language, leaving absolute
+       URLs and mailto: links untouched. Front matter carries language-neutral
+       paths like "/what-we-do/", which must not send a Chinese reader to the
+       English page — nor mangle "mailto:" into a relative URL. */ -}}
+{{- if hasPrefix . "/" }}{{ . | relLangURL }}{{ else }}{{ . }}{{ end -}}

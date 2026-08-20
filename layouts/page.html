@@ -68,8 +68,8 @@
   {{ partial "cta.html" (dict
     "label" (.label | default (i18n "next"))
     "title" .title
-    "primary" (dict "text" .primary.text "url" (.primary.url | relURL))
-    "secondary" (cond (isset . "secondary") (dict "text" .secondary.text "url" (.secondary.url | relURL)) nil)
+    "primary" (dict "text" .primary.text "url" (partial "utils/lang-url.html" .primary.url))
+    "secondary" (cond (isset . "secondary") (dict "text" .secondary.text "url" (partial "utils/lang-url.html" .secondary.url)) nil)
   ) }}
   {{ end }}
 {{ end }}

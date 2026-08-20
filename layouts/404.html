@@ -1,12 +1,12 @@
 {{ define "main" }}
 <section class="ix-phero" style="min-height:66svh;display:grid;align-content:center">
   <div class="ix-wrap">
-    <p class="ix-label ix-label--ice" style="margin-bottom:2rem">404 — Page not found</p>
-    <h1 class="ix-h1" style="margin-bottom:2rem">This page<br />is not available.</h1>
+    <p class="ix-label ix-label--ice" style="margin-bottom:2rem">{{ i18n "notFoundKicker" }}</p>
+    <h1 class="ix-h1" style="margin-bottom:2rem">{{ i18n "notFoundTitle" | safeHTML }}</h1>
     <div class="ix-hero-actions">
-      <a class="ix-btn ix-btn--solid" href="{{ "/" | relURL }}">Return to Home
+      <a class="ix-btn ix-btn--solid" href="{{ "/" | relLangURL }}">{{ i18n "returnHome" }}
       </a>
-      <a class="ix-btn" href="{{ "/what-we-do/" | relURL }}">What We Do
+      <a class="ix-btn" href="{{ "/what-we-do/" | relLangURL }}">{{ i18n "whatWeDo" }}
       </a>
     </div>
   </div>

@@ -41,7 +41,7 @@
   {{ partial "cta.html" (dict
     "label" (i18n "enquiries")
     "title" "Discuss an infrastructure requirement<br />with our engineering team."
-    "primary" (dict "text" (i18n "makeEnquiry") "url" ("/contact-us/" | relURL))
-    "secondary" (dict "text" (i18n "whoWeAre") "url" ("/who-we-are/" | relURL))
+    "primary" (dict "text" (i18n "makeEnquiry") "url" (partial "utils/lang-url.html" "/contact-us/"))
+    "secondary" (dict "text" (i18n "whoWeAre") "url" (partial "utils/lang-url.html" "/who-we-are/"))
   ) }}
 {{ end }}

@@ -50,3 +50,7 @@ serviceOverview = "服务概览"
 generalEnquiries = "业务咨询"
 talentIntake = "人才招募"
 registeredOffice = "注册地址"
+
+notFoundKicker = "404 — 页面不存在"
+notFoundTitle = "该页面<br />暂时无法访问。"
+returnHome = "返回首页"

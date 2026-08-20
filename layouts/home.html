@@ -13,9 +13,9 @@
         </h1>
         <p class="ix-lead ix-hero-sub ix-reveal d2">{{ .Params.hero.standfirst }}</p>
         <div class="ix-hero-actions ix-reveal d3">
-          <a class="ix-btn ix-btn--solid" href="{{ .Params.hero.primary.url | relURL }}">{{ .Params.hero.primary.text }}
+          <a class="ix-btn ix-btn--solid" href="{{ partial "utils/lang-url.html" .Params.hero.primary.url }}">{{ .Params.hero.primary.text }}
           </a>
-          <a class="ix-btn" href="{{ .Params.hero.secondary.url | relURL }}">{{ .Params.hero.secondary.text }}
+          <a class="ix-btn" href="{{ partial "utils/lang-url.html" .Params.hero.secondary.url }}">{{ .Params.hero.secondary.text }}
           </a>
         </div>
       </div>
@@ -45,7 +45,7 @@
         {{- with $s.body }}<p class="ix-body" style="max-width:none;margin-top:1.2rem">{{ . }}</p>{{ end }}
         {{- with $s.link }}
         <p style="margin-top:2.2rem">
-          <a class="ix-tlink" href="{{ .url | relURL }}">
+          <a class="ix-tlink" href="{{ partial "utils/lang-url.html" .url }}">
             <span class="ix-tlink-rule" aria-hidden="true"></span>{{ .text }}
           </a>
         </p>
@@ -78,8 +78,8 @@
 {{ partial "cta.html" (dict
   "label" (i18n "contactUs")
   "title" .Params.closing.title
-  "primary" (dict "text" .Params.closing.primary.text "url" (.Params.closing.primary.url | relURL))
-  "secondary" (dict "text" .Params.closing.secondary.text "url" (.Params.closing.secondary.url | relURL))
+  "primary" (dict "text" .Params.closing.primary.text "url" (partial "utils/lang-url.html" .Params.closing.primary.url))
+  "secondary" (dict "text" .Params.closing.secondary.text "url" (partial "utils/lang-url.html" .Params.closing.secondary.url))
 ) }}
 
 {{ end }}

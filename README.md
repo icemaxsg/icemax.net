@@ -58,6 +58,36 @@ Singapore PDPA requires — and say plainly that they are being finalised. No
 binding terms or data-handling commitments have been written. They need legal
 review before the `noindex` is removed.
 
+## Languages
+
+English is served at the root, Simplified Chinese under `/zh/`. A toggle sits in
+the navbar and the mobile drawer.
+
+- **Page copy** is translated per file: `content/**/*.zh.md` beside the English
+  original. Either language can be edited without touching the other.
+- **Interface strings** live in `i18n/en.toml` and `i18n/zh.toml` — navigation,
+  section labels, diagram legends, contact labels, the 404, and the strata names
+  inside the cross-section. Nothing user-facing is hard-coded in a template.
+- **Menus** are declared per language in `hugo.yaml`, so labels are translated
+  rather than transliterated.
+- The toggle links to a page's counterpart where one exists and to the other
+  language's home where it does not, so it never lands on a 404.
+
+Internal links in front matter are written language-neutral (`/what-we-do/`) and
+resolved through `_partials/utils/lang-url.html`, which applies the current
+language and leaves `mailto:` untouched. Using `relURL` here instead would send
+Chinese readers to English pages.
+
+The Latin display face has no CJK coverage, so Chinese falls back to the
+platform UI face. `assets/css/i18n.css` relaxes the tracking and line-height
+tuned for Space Grotesk — which otherwise collide Han glyphs — and drops the
+display scale a step. No CJK webfont is loaded; a subsetted Han face costs
+megabytes for little return.
+
+`hreflang` alternates are emitted on every page and inside the sitemaps, with
+`x-default` resolving to English. `layouts/sitemap.xml` excludes pages carrying
+`noindex`, since a sitemap asking to index a noindexed page contradicts itself.
+
 ## Layouts and components
 
 ```

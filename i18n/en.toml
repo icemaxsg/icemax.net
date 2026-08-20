@@ -50,3 +50,7 @@ serviceOverview = "Service Overview"
 generalEnquiries = "General Enquiries"
 talentIntake = "Talent Intake"
 registeredOffice = "Registered Office"
+
+notFoundKicker = "404 — Page not found"
+notFoundTitle = "This page<br />is not available."
+returnHome = "Return to Home"
