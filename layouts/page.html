@@ -27,7 +27,7 @@
   {{ with .Params.principles }}
   <section class="ix-section ix-section--flush-top">
     <div class="ix-wrap">
-      {{ partial "section-head.html" (dict "index" "02" "label" $.Params.principles_label | default "Operating Principles") }}
+      {{ partial "section-head.html" (dict "index" "02" "label" $.Params.principles_label | default (i18n "operatingPrinciples")) }}
       <div class="ix-principles">
         {{- range $i, $p := . }}
         <article class="ix-principle">
@@ -46,7 +46,7 @@
   {{ with .Params.roles }}
   <section class="ix-section ix-section--flush-top">
     <div class="ix-wrap">
-      {{ partial "section-head.html" (dict "index" "02" "label" "Who We Look For") }}
+      {{ partial "section-head.html" (dict "index" "02" "label" (i18n "whoWeLookFor")) }}
       <div class="ix-roles">
         {{- range $i, $r := . }}
         <article class="ix-role ix-reveal">
@@ -66,7 +66,7 @@
 
   {{ with .Params.cta }}
   {{ partial "cta.html" (dict
-    "label" (.label | default "Next")
+    "label" (.label | default (i18n "next"))
     "title" .title
     "primary" (dict "text" .primary.text "url" (.primary.url | relURL))
     "secondary" (cond (isset . "secondary") (dict "text" .secondary.text "url" (.secondary.url | relURL)) nil)

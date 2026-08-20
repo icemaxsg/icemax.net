@@ -3,11 +3,11 @@
 <div class="ix-reveal d2">
   <div class="ix-edge-vis">
     <canvas class="ix-edge-canvas" role="img"
-      aria-label="Diagram: traffic approaching from the open network. Malicious traffic is filtered at the edge perimeter; legitimate traffic continues to origin infrastructure."></canvas>
+      aria-label="{{ i18n "edgeVizAlt" }}"></canvas>
   </div>
   <ul class="ix-edge-legend">
-    <li><span class="ix-swatch ix-swatch--threat" aria-hidden="true"></span><span class="ix-label">Volumetric attacks · bots · web exploits</span></li>
-    <li><span class="ix-swatch ix-swatch--edge" aria-hidden="true"></span><span class="ix-label">Edge perimeter — inspection and filtering</span></li>
-    <li><span class="ix-swatch ix-swatch--clean" aria-hidden="true"></span><span class="ix-label">Legitimate traffic to origin infrastructure</span></li>
+    <li><span class="ix-swatch ix-swatch--threat" aria-hidden="true"></span><span class="ix-label">{{ i18n "legendThreat" }}</span></li>
+    <li><span class="ix-swatch ix-swatch--edge" aria-hidden="true"></span><span class="ix-label">{{ i18n "legendEdge" }}</span></li>
+    <li><span class="ix-swatch ix-swatch--clean" aria-hidden="true"></span><span class="ix-label">{{ i18n "legendClean" }}</span></li>
   </ul>
 </div>

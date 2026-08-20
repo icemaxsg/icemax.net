@@ -1,0 +1,24 @@
+{{/* Language toggle. Links to this page's counterpart where one exists, and to
+     the other language's home page where it does not — never to a 404. */}}
+{{- $cur := .Page -}}
+{{- $class := .class | default "" -}}
+{{- if gt (len hugo.Sites) 1 }}
+<div class="ix-lang {{ $class }}" role="group" aria-label="{{ i18n "language" }}">
+  {{- range hugo.Sites }}
+    {{- $lang := .Language -}}
+    {{- $isCurrent := eq $lang.Lang $cur.Lang -}}
+    {{- $href := .Home.RelPermalink -}}
+    {{- if not $isCurrent -}}
+      {{- range $cur.AllTranslations -}}
+        {{- if eq .Lang $lang.Lang }}{{ $href = .RelPermalink }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $label := $lang.Params.shortLabel | default $lang.Label -}}
+    {{- if $isCurrent }}
+    <span class="ix-lang-item is-current" aria-current="true" lang="{{ $lang.Locale }}">{{ $label }}</span>
+    {{- else }}
+    <a class="ix-lang-item" href="{{ $href }}" lang="{{ $lang.Locale }}" hreflang="{{ $lang.Locale }}">{{ $label }}</a>
+    {{- end }}
+  {{- end }}
+</div>
+{{- end }}

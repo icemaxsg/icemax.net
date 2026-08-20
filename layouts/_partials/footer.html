@@ -11,7 +11,7 @@
       </div>
 
       <div class="ix-footer-col">
-        <h2 class="ix-label">What We Do</h2>
+        <h2 class="ix-label">{{ i18n "whatWeDo" }}</h2>
         <ul>
           {{- with $svc }}{{ range .Pages.ByWeight }}
           <li><a href="{{ .RelPermalink }}">{{ .Params.short_title | default .Title }}</a></li>
@@ -20,7 +20,7 @@
       </div>
 
       <div class="ix-footer-col">
-        <h2 class="ix-label">Company</h2>
+        <h2 class="ix-label">{{ i18n "footerCompany" }}</h2>
         <ul>
           {{- range site.Menus.main }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
@@ -29,7 +29,7 @@
       </div>
 
       <div class="ix-footer-col">
-        <h2 class="ix-label">Contact</h2>
+        <h2 class="ix-label">{{ i18n "footerContact" }}</h2>
         <ul>
           <li><a href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}</a></li>
           <li><a href="mailto:{{ site.Params.email.careers }}">{{ site.Params.email.careers }}</a></li>
@@ -44,7 +44,7 @@
 
     <div class="ix-footer-bottom">
       <p class="ix-label">© {{ now.Year }} {{ site.Title }}</p>
-      <nav class="ix-footer-legal" aria-label="Legal">
+      <nav class="ix-footer-legal" aria-label="{{ i18n "navLegal" }}">
         {{- range site.Menus.legal }}
         <a href="{{ .URL }}">{{ .Name }}</a>
         {{- end }}

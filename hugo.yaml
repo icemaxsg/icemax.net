@@ -1,6 +1,81 @@
 baseURL: "https://icemax.net/"
-locale: "en-SG"
-title: "iceMax SG Pte. Ltd."
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+
+languages:
+  en:
+    label: "English"
+    locale: "en-SG"
+    weight: 1
+    title: "iceMax SG Pte. Ltd."
+    params:
+      shortLabel: "EN"
+      description: "Singapore-based technology infrastructure provider specialising in edge network security and managed multi-cloud deployment."
+    menus:
+      main:
+        - name: "What We Do"
+          pageRef: /what-we-do
+          weight: 10
+        - name: "Who We Are"
+          pageRef: /who-we-are
+          weight: 20
+        - name: "What's Happening"
+          pageRef: /whats-happening
+          weight: 30
+        - name: "Join Us"
+          pageRef: /join-us
+          weight: 40
+        - name: "Contact Us"
+          pageRef: /contact-us
+          weight: 50
+        - name: "Partner Us"
+          pageRef: /partner-us
+          weight: 60
+      legal:
+        - name: "Terms of Use"
+          pageRef: /legal/terms-of-use
+          weight: 10
+        - name: "Privacy Policy"
+          pageRef: /legal/privacy-policy
+          weight: 20
+
+  zh:
+    label: "简体中文"
+    locale: "zh-CN"
+    weight: 2
+    contentDir: "content"
+    title: "新加坡 iceMax 私人有限公司"
+    params:
+      shortLabel: "中文"
+      description: "总部位于新加坡的技术基础设施服务商，专注于边缘网络安全与多云环境的托管部署。"
+    menus:
+      main:
+        - name: "业务范围"
+          pageRef: /what-we-do
+          weight: 10
+        - name: "关于我们"
+          pageRef: /who-we-are
+          weight: 20
+        - name: "最新动态"
+          pageRef: /whats-happening
+          weight: 30
+        - name: "加入我们"
+          pageRef: /join-us
+          weight: 40
+        - name: "联系我们"
+          pageRef: /contact-us
+          weight: 50
+        - name: "合作伙伴"
+          pageRef: /partner-us
+          weight: 60
+      legal:
+        - name: "使用条款"
+          pageRef: /legal/terms-of-use
+          weight: 10
+        - name: "隐私政策"
+          pageRef: /legal/privacy-policy
+          weight: 20
+
 enableRobotsTXT: true
 enableGitInfo: false
 
@@ -20,36 +95,6 @@ params:
   email:
     general: "bd@icemax.net"
     careers: "careers@icemax.net"
-
-menus:
-  main:
-    - name: "What We Do"
-      pageRef: /what-we-do
-      weight: 10
-    - name: "Who We Are"
-      pageRef: /who-we-are
-      weight: 20
-    - name: "What's Happening"
-      pageRef: /whats-happening
-      weight: 30
-    - name: "Join Us"
-      pageRef: /join-us
-      weight: 40
-    - name: "Contact Us"
-      pageRef: /contact-us
-      weight: 50
-    - name: "Partner Us"
-      pageRef: /partner-us
-      weight: 60
-
-  # Legal, surfaced in the footer only.
-  legal:
-    - name: "Terms of Use"
-      pageRef: /legal/terms-of-use
-      weight: 10
-    - name: "Privacy Policy"
-      pageRef: /legal/privacy-policy
-      weight: 20
 
 markup:
   goldmark:

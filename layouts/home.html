@@ -27,7 +27,7 @@
   <div class="ix-hero-meta">
     <div class="ix-scroll-cue">
       <span class="ix-scroll-cue-rail" aria-hidden="true"></span>
-      <span class="ix-label">Scroll</span>
+      <span class="ix-label">{{ i18n "scroll" }}</span>
     </div>
   </div>
 </section>
@@ -76,7 +76,7 @@
 {{- end }}
 
 {{ partial "cta.html" (dict
-  "label" "Contact"
+  "label" (i18n "contactUs")
   "title" .Params.closing.title
   "primary" (dict "text" .Params.closing.primary.text "url" (.Params.closing.primary.url | relURL))
   "secondary" (dict "text" .Params.closing.secondary.text "url" (.Params.closing.secondary.url | relURL))

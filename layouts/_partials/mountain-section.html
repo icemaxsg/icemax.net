@@ -1,7 +1,7 @@
 {{/* Cross-section of the massif: the stack the traffic passes through, drawn
      as strata inside the peak rather than as a list beside a paragraph. */}}
 <div class="ix-xsection ix-reveal" role="img"
-     aria-label="Cross-section of the infrastructure stack: edge, security, network, compute and data layers within the mountain.">
+     aria-label="{{ i18n "sectionAlt" }}">
   <svg viewBox="0 0 640 420" focusable="false">
     <defs>
       <clipPath id="ix-peak-clip">
@@ -17,11 +17,11 @@
 
     <g clip-path="url(#ix-peak-clip)" class="ix-xsection-strata">
       {{- $strata := slice
-        (dict "y" 120 "label" "EDGE"     "note" "Perimeter filtering")
-        (dict "y" 178 "label" "SECURITY" "note" "WAF · Zero Trust")
-        (dict "y" 236 "label" "NETWORK"  "note" "Routing · interconnect")
-        (dict "y" 294 "label" "COMPUTE"  "note" "EC2 · GCE · GKE")
-        (dict "y" 352 "label" "DATA"     "note" "Storage · backup")
+        (dict "y" 120 "label" (i18n "strataEdge")     "note" (i18n "strataEdgeNote"))
+        (dict "y" 178 "label" (i18n "strataSecurity") "note" (i18n "strataSecurityNote"))
+        (dict "y" 236 "label" (i18n "strataNetwork")  "note" (i18n "strataNetworkNote"))
+        (dict "y" 294 "label" (i18n "strataCompute")  "note" (i18n "strataComputeNote"))
+        (dict "y" 352 "label" (i18n "strataData")     "note" (i18n "strataDataNote"))
       -}}
       {{- range $strata }}
       <g class="ix-stratum">

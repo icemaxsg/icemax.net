@@ -1,4 +1,4 @@
-<a class="ix-skip" href="#main">Skip to content</a>
+<a class="ix-skip" href="#main">{{ i18n "skipToContent" }}</a>
 <div class="ix-progress" aria-hidden="true"></div>
 <div class="ix-scrim" aria-hidden="true"></div>
 
@@ -8,7 +8,7 @@
       <img src="{{ "images/logo.svg" | relURL }}" alt="{{ site.Params.shortName }}" width="103" height="30" />
     </a>
 
-    <nav class="ix-nav-links" aria-label="Primary">
+    <nav class="ix-nav-links" aria-label="{{ i18n "navPrimary" }}">
       {{- range $i, $e := site.Menus.main }}
         {{- $page := "" -}}
         {{- with .PageRef }}{{ $page = site.GetPage . }}{{ end -}}
@@ -27,7 +27,7 @@
             <ul>
               <li>
                 <a class="ix-nav-menu-lead" href="{{ .URL }}">
-                  <span>{{ .Name }} overview</span>
+                  <span>{{ i18n "overview" . }}</span>
                 </a>
               </li>
               {{- range $children }}
@@ -47,16 +47,19 @@
       {{- end }}
     </nav>
 
-    <a class="ix-btn ix-nav-cta" href="{{ "/contact-us/" | relURL }}">Make an Enquiry</a>
+    <div class="ix-nav-end">
+      {{ partial "lang-switch.html" (dict "Page" . "class" "ix-lang--nav") }}
+      <a class="ix-btn ix-nav-cta" href="{{ "/contact-us/" | relLangURL }}">{{ i18n "makeEnquiry" }}</a>
+    </div>
 
-    <button class="ix-burger" type="button" aria-expanded="false" aria-controls="ix-drawer" aria-label="Menu">
+    <button class="ix-burger" type="button" aria-expanded="false" aria-controls="ix-drawer" aria-label="{{ i18n "menu" }}">
       <span></span><span></span>
     </button>
   </div>
 </header>
 
 <div class="ix-drawer" id="ix-drawer">
-  <nav class="ix-drawer-links" aria-label="Mobile">
+  <nav class="ix-drawer-links" aria-label="{{ i18n "navMobile" }}">
     {{- range $i, $e := site.Menus.main }}
       {{- $page := "" -}}
       {{- with .PageRef }}{{ $page = site.GetPage . }}{{ end -}}
@@ -71,7 +74,7 @@
           <span class="ix-nav-chevron" aria-hidden="true"></span>
         </button>
         <div class="ix-drawer-sub" id="ix-dm-{{ $i }}" hidden>
-          <a href="{{ .URL }}">{{ .Name }} overview</a>
+          <a href="{{ .URL }}">{{ i18n "overview" . }}</a>
           {{- range $children }}
           <a href="{{ .RelPermalink }}">{{ .Params.short_title | default .Title }}</a>
           {{- end }}
@@ -86,6 +89,7 @@
     {{- end }}
   </nav>
   <div class="ix-drawer-foot">
+    {{ partial "lang-switch.html" (dict "Page" . "class" "ix-lang--drawer") }}
     <a class="ix-btn ix-btn--solid" href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}</a>
   </div>
 </div>
