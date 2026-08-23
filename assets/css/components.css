@@ -216,6 +216,19 @@
 .ix-footer-col ul { display: grid; gap: .85rem; }
 .ix-footer-col a { color: var(--ix-mist); font-size: var(--ix-t-sm); transition: color var(--ix-dur-fast) var(--ix-ease); }
 .ix-footer-col a:hover { color: var(--ix-ice); }
+/* Social marks sit under the brand blurb, not in the link columns — they are
+   destinations off-site, and the 44px hit area is the reason for the padding. */
+.ix-social { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.6rem; margin-left: -.7rem; }
+.ix-social-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  color: var(--ix-steel);
+  transition: color var(--ix-dur-fast) var(--ix-ease), transform var(--ix-dur-fast) var(--ix-ease);
+}
+.ix-social-link:hover { color: var(--ix-ice); transform: translateY(-1px); }
+.ix-social-link svg { display: block; }
+.ix-social--drawer { margin-top: 0; gap: .5rem; }
+
 .ix-footer-bottom {
   margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: 1.6rem;
   border-top: 1px solid var(--ix-line);

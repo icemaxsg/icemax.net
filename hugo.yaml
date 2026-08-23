@@ -95,6 +95,24 @@ params:
   email:
     general: "bd@icemax.net"
     careers: "careers@icemax.net"
+  # Order is the order they render in the footer. `icon` selects the glyph in
+  # layouts/_partials/social.html; `url` also feeds Organization.sameAs.
+  social:
+    - name: "LinkedIn"
+      icon: "linkedin"
+      url: "https://www.linkedin.com/company/icemax-sg"
+    - name: "Instagram"
+      icon: "instagram"
+      url: "https://www.instagram.com/icemaxsg/"
+    - name: "X"
+      icon: "x"
+      url: "https://x.com/icemaxsg"
+    - name: "Telegram"
+      icon: "telegram"
+      url: "https://t.me/icemaxsg"
+    - name: "GitHub"
+      icon: "github"
+      url: "https://github.com/icemaxsg"
 
 markup:
   goldmark:

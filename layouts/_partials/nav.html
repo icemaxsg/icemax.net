@@ -89,6 +89,7 @@
     {{- end }}
   </nav>
   <div class="ix-drawer-foot">
+    {{ partial "social.html" (dict "class" "ix-social--drawer" "label" (i18n "navSocialMobile")) }}
     {{ partial "lang-switch.html" (dict "Page" . "class" "ix-lang--drawer") }}
     <a class="ix-btn ix-btn--solid" href="mailto:{{ site.Params.email.general }}">{{ site.Params.email.general }}</a>
   </div>

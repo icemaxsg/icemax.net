@@ -1,3 +1,5 @@
+{{- $sameAs := slice -}}
+{{- range site.Params.social -}}{{- $sameAs = $sameAs | append .url -}}{{- end -}}
 {{- $org := dict
   "@type" "Organization"
   "@id" (printf "%s#organization" site.BaseURL)
@@ -13,6 +15,7 @@
     "postalCode" site.Params.address.postalCode
     "addressCountry" site.Params.address.country)
 -}}
+{{- if $sameAs }}{{ $org = merge $org (dict "sameAs" $sameAs) }}{{ end -}}
 {{- if .IsHome -}}
   {{- $web := dict "@type" "WebSite" "@id" (printf "%s#website" site.BaseURL) "url" site.BaseURL "name" site.Title "inLanguage" "en-SG" "publisher" (dict "@id" (printf "%s#organization" site.BaseURL)) -}}
   <script type="application/ld+json">{{ (dict "@context" "https://schema.org" "@graph" (slice $org $web)) | jsonify | safeJS }}</script>
